@@ -37,4 +37,14 @@ describe 'List' do
     list = List.new('stuffinit', 1)
     expect(list).to be_an_instance_of List
   end
+
+  it 'returns all tasks within a specified list' do
+    list = List.new('Home')
+    list.save
+    task = Task.new('clean', list.id)
+    task.save
+    task1 = Task.new('sweep', list.id)
+    task1.save
+    expect(list.tasks).to eq [task.name, task1.name]
+  end
 end

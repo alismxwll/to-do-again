@@ -32,4 +32,13 @@ class List
   def id
     @id
   end
+
+  def tasks
+    tasks = DB.exec("SELECT * FROM tasks WHERE list_id = #{@id}")
+    results = []
+    tasks.each do |task|
+      results << task['name']
+    end
+    results
+  end
 end
