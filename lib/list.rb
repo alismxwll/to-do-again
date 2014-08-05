@@ -49,8 +49,6 @@ class List
       if name == list_name['name']
         DB.exec("DELETE FROM lists;")
         DB.exec("DELETE FROM tasks;")
-          # garbage_can.each do |list|
-          #   list.exist?
       end
     end
   end

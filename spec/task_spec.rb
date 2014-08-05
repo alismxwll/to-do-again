@@ -41,4 +41,11 @@ describe 'Task' do
     Task.all
     expect(Task.all).to eq [task_twelve]
   end
+
+  it 'allows the capability to mark a task as finished' do
+    task = Task.new('learn to ski', 8)
+    task.save
+    task.mark_completed
+    expect(task.completed).to eq ['t']
+  end
 end

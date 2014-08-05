@@ -1,9 +1,10 @@
 require 'pg'
 
 class Task
-  def initialize name, list_id
+  def initialize name, list_id, completed=nil
     @list_id = list_id
     @name = name
+    @completed = completed
   end
 
   def name
@@ -12,6 +13,15 @@ class Task
 
   def list_id
     @list_id
+  end
+
+  def completed
+    results = []
+    marked = DB.exec("SELECT * FROM tasks WHERE completed = 'true';")
+    marked.each do |mark|
+      results << mark['completed']
+    end
+    results
   end
 
   def save
@@ -40,5 +50,9 @@ class Task
         DB.exec("DELETE FROM tasks WHERE name = '#{@name}';")
       end
     end
+  end
+
+  def mark_completed
+    DB.exec("UPDATE tasks SET completed = 'true' WHERE name = '#{@name}';")
   end
 end
