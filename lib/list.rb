@@ -1,3 +1,4 @@
+require 'pry'
 class List
 
   def initialize name, id=nil
@@ -34,11 +35,23 @@ class List
   end
 
   def tasks
-    tasks = DB.exec("SELECT * FROM tasks WHERE list_id = #{@id}")
+    tasks = DB.exec("SELECT * FROM tasks WHERE list_id = #{@id};")
     results = []
     tasks.each do |task|
       results << task['name']
     end
     results
+  end
+
+  def delete!
+    list = DB.exec("SELECT * FROM lists")
+    list.each do |list_name|
+      if name == list_name['name']
+        DB.exec("DELETE FROM lists;")
+        DB.exec("DELETE FROM tasks;")
+          # garbage_can.each do |list|
+          #   list.exist?
+      end
+    end
   end
 end

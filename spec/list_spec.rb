@@ -47,4 +47,16 @@ describe 'List' do
     task1.save
     expect(list.tasks).to eq [task.name, task1.name]
   end
+
+  it 'Deletes a selected list and all associated tasks' do
+    list = List.new('school')
+    list.save
+    task = Task.new('study', list.id)
+    task.save
+    task1 = Task.new('drink beer', list.id)
+    task1.save
+    list.delete!
+    expect(List.all).to eq []
+    expect(Task.all).to eq []
+  end
 end
